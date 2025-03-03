@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"runtime"
 	"time"
 
@@ -10,9 +11,15 @@ import (
 )
 
 func main() {
+	user := os.Getenv("DB_USER")
+	dbname := os.Getenv("DB_NAME")
+	host := os.Getenv("DB_HOST")
+	password := os.Getenv("DB_PASSWORD")
+	port := os.Getenv("DB_PORT")
 
-	// Replace the connection details (user, dbname, password, host) with your own
-	db, err := sqlx.Connect("postgres", "user=roa-uat-application dbname=port sslmode=disable password='penR40S!CP@B' host=localhost port=5432")
+	dsn := "user=" + user + " dbname=" + dbname + " host=" + host + " sslmode=disable password=" + password + " port=" + port
+
+	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {
 		log.Fatalln(err)
 	}
